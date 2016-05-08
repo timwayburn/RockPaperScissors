@@ -25,13 +25,14 @@ public class Main extends Application {
     Stage window;
     GridPane grid;
 
-
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Game game = new Game();
+
         Stage window = primaryStage; // primary stage
         window.setTitle("RockPaperScissors Bot"); // Window title (top of screen)
 
@@ -42,7 +43,7 @@ public class Main extends Application {
 
 
 
-        // Layout 1 - start screen
+        // Layout 1 - Main menu
 
             //Button 1 (go to main menu)
         Button button1 = new Button("Click here to start"); // Create a button
@@ -56,19 +57,79 @@ public class Main extends Application {
 
         VBox layout = new VBox(20);
         layout.getChildren().addAll(label1, button1, button3);
-        scene1 = new Scene(layout, 400, 300); // create the scene, set size of entire window
+        scene1 = new Scene(layout, 1080, 960); // create the scene, set size of entire window
 
 
 
-        // Layout 2 - Main menu
+        // Layout 2 - Gameplay
 
-            // Button 2 (to highscore button)
-        Button button2 = new Button("To Highscores");
+        GridPane gamegrid = new GridPane();
+        gamegrid.setPadding(new Insets(10,10,10,10));
+        gamegrid.setVgap(8);
+        gamegrid.setHgap(10);
+
+        // Wins label
+        Label winslabel = new Label("Wins: " + Game.getWins());
+        gamegrid.setConstraints(winslabel, 1, 2);
+        // Tie label
+        Label tielabel = new Label("Ties: " + Game.getTies());
+        gamegrid.setConstraints(tielabel, 2, 2);
+        // Loss label
+        Label losslabel = new Label("Losses: " + Game.getLosses());
+        gamegrid.setConstraints(losslabel, 3, 2);
+        // Totalgames label
+        Label totallabel = new Label("Total Games played: " + Game.getTotalgames());
+        gamegrid.setConstraints(totallabel, 0, 1);
+
+
+        // Button 2 (to highscore button)
+        Button button2 = new Button("End Game");
         button2.setOnAction(e -> window.setScene(scene3));
+        gamegrid.setConstraints(button2, 12, 31);
 
-        StackPane layout2 = new StackPane();
-        layout2.getChildren().add(button2);
-        scene2 = new Scene(layout2, 400, 300);
+        // Rock button
+        Button rockbutton = new Button("Rock");
+
+        rockbutton.setOnAction(e -> {
+                int result = game.play(1); // choice: 1 = rock, 2 = paper, 3 = scissors
+                winslabel.setText("Wins: " + Game.getWins());
+                losslabel.setText("Losses: " + Game.getLosses());
+            tielabel.setText("Ties: " + Game.getTies());
+                totallabel.setText("Total Games Played: " + Game.getTotalgames());
+            }
+        );
+        gamegrid.setConstraints(rockbutton, 11, 30);
+
+        // Paper button
+        Button paperbutton = new Button("Paper");
+
+        paperbutton.setOnAction(e -> {
+                    int result = game.play(2); // choice: 1 = rock, 2 = paper, 3 = scissors
+                    winslabel.setText("Wins: " + Game.getWins());
+                    losslabel.setText("Losses: " + Game.getLosses());
+                    tielabel.setText("Ties: " + Game.getTies());
+                    totallabel.setText("Total Games Played: " + Game.getTotalgames());
+                }
+        );
+        gamegrid.setConstraints(paperbutton, 12, 30);
+
+        // Scissor button
+        Button scissorbutton = new Button("Scissor");
+
+        scissorbutton.setOnAction(e -> {
+                    int result = game.play(3); // choice: 1 = rock, 2 = paper, 3 = scissors
+                    winslabel.setText("Wins: " + Game.getWins());
+                    losslabel.setText("Losses: " + Game.getLosses());
+                    tielabel.setText("Ties: " + Game.getTies());
+                    totallabel.setText("Total Games Played: " + Game.getTotalgames());
+                }
+        );
+        gamegrid.setConstraints(scissorbutton, 13, 30);
+
+        gamegrid.getChildren().addAll(button2, rockbutton, paperbutton, scissorbutton, winslabel,
+                losslabel, tielabel, totallabel);
+        scene2 = new Scene(gamegrid, 1080, 960);
+
 
 
         // Layout 4 - To highscore submit
@@ -80,11 +141,11 @@ public class Main extends Application {
 
             // Name Label
         Label nameLabel = new Label("Username:");
-        GridPane.setConstraints(nameLabel, 0, 0);
+        GridPane.setConstraints(nameLabel, 0, 1);
 
             // Name input
         TextField nameInput = new TextField();
-        GridPane.setConstraints(nameInput, 1, 0);
+        GridPane.setConstraints(nameInput, 1, 1);
         nameInput.setPromptText("Your name here");
         //TODO: red outline if no name or too long.
 
@@ -93,8 +154,12 @@ public class Main extends Application {
         GridPane.setConstraints(button4, 1, 2);
         //TODO: highscorelist
 
-        grid.getChildren().addAll(nameLabel, nameInput, button4);
-        scene3 = new Scene(grid, 400, 300);
+            //title lable
+        Label label2 = new Label("Enter your name to enter the highscores");
+        GridPane.setConstraints(label2, 0, 0);
+
+        grid.getChildren().addAll(label2,nameLabel, nameInput, button4);
+        scene3 = new Scene(grid, 1080, 960);
 
         //Layout 5 - Options menu
             //TODO: Options menu with checkboxes for resolutions, modes, difficulty.
@@ -106,7 +171,7 @@ public class Main extends Application {
     }
 
     private void closeProgram() {
-        Boolean answer = ConfirmBox.display("title", "Are you sure you want to exit?");
+        Boolean answer = ConfirmBox.display("Warning!", "Are you sure you want to exit?");
 
         if(answer){
             Platform.exit();

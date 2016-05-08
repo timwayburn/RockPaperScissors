@@ -9,19 +9,52 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Tim on 23/04/16.
  */
 public class RPIAlgorithm {
-    private int rockcount;
-    private int scissorcount;
-    private int papercount;
 
-    public void RPS(){
-        //TODO: for first throws, based off first play stats.
+    ArrayList<Integer> plays = new ArrayList<>();
+    ArrayList<Integer> compplays = new ArrayList<>();
+    Random random = new Random();
 
-        //TODO: for >3 turns play off previous plays instead.
-        // sometimes randomv
+    public int RPS(int choice){
+        // parameter choice: 1 = rock, 2 = paper, 3 = scissors
+        //  returns result: 3 = win, 4 = loss, 5 = tie
+        int compchoice = computerselection();
+
+        plays.add(choice);
+        compplays.add(compchoice);
+
+        if(choice == compchoice){
+            return 5; // tie
+        }
+        else if(choice == 1 && compchoice == 2){
+            return 4;
+        }
+        else if(choice == 1 && compchoice == 3){
+            return 3;
+        }
+        else if(choice == 2 && compchoice == 1){
+            return 3;
+        }
+        else if(choice == 2 && compchoice == 3){
+            return 4;
+        }
+        else if(choice == 3 && compchoice ==1){
+            return 4;
+        }
+        else {  //choice == 3 && compchoice == 2
+            return 3;
+        }
     }
+
+    public int computerselection(){
+        int compchoice = random.nextInt(3) + 1;
+        return compchoice;
+    }
+
 }
