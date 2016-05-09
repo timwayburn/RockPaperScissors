@@ -1,18 +1,19 @@
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.media.*;
+import javafx.stage.*;
+import java.nio.file.Paths;
+import java.io.File;
 
-import javax.swing.*;
+
 
 /**
  * Test Application :)
@@ -55,8 +56,17 @@ public class Main extends Application {
 
         Label label1 = new Label("Welcome to Rock Paper Scissors!");
 
+
+        String path = new File("src/Sounds/shutemdown.mp3").getAbsolutePath();
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer player = new MediaPlayer(media);
+        player.play();
+        player.setVolume(0.1);
+
+        MediaView mediaView = new MediaView(player);
+
         VBox layout = new VBox(20);
-        layout.getChildren().addAll(label1, button1, button3);
+        layout.getChildren().addAll(label1, button1, button3, mediaView);
         scene1 = new Scene(layout, 1080, 960); // create the scene, set size of entire window
 
 
@@ -167,6 +177,7 @@ public class Main extends Application {
 
         // startup
         primaryStage.setScene(scene1); // set the main scene on stage
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
