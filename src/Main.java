@@ -12,7 +12,7 @@ import javafx.scene.media.*;
 import javafx.stage.*;
 import java.nio.file.Paths;
 import java.io.File;
-
+import java.util.Random;
 
 
 /**
@@ -46,22 +46,27 @@ public class Main extends Application {
 
         // Layout 1 - Main menu
 
-            //Button 1 (go to main menu)
+            //music for main menu
+        String path = new File("src/Sounds/menumusic.mp3").getAbsolutePath();
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer player = new MediaPlayer(media);
+        player.setCycleCount(MediaPlayer.INDEFINITE);
+        player.play();
+        player.setVolume(0.013); // URL: [https://freesound.org/people/Lenguaverde/sounds/177304/]
+
+            //Button 1 (go to game)
         Button button1 = new Button("Click here to start"); // Create a button
-        button1.setOnAction(e -> window.setScene(scene2));
+        button1.setOnAction(e -> {
+            window.setScene(scene2);
+            player.pause();
+        });
+
 
             // Button 3 (exit button)
         Button button3 = new Button("Exit");
         button3.setOnAction(e -> closeProgram());
 
         Label label1 = new Label("Welcome to Rock Paper Scissors!");
-
-
-        String path = new File("src/Sounds/shutemdown.mp3").getAbsolutePath();
-        Media media = new Media(new File(path).toURI().toString());
-        MediaPlayer player = new MediaPlayer(media);
-        player.play();
-        player.setVolume(0.1);
 
         MediaView mediaView = new MediaView(player);
 
@@ -104,8 +109,11 @@ public class Main extends Application {
                 int result = game.play(1); // choice: 1 = rock, 2 = paper, 3 = scissors
                 winslabel.setText("Wins: " + Game.getWins());
                 losslabel.setText("Losses: " + Game.getLosses());
-            tielabel.setText("Ties: " + Game.getTies());
+                tielabel.setText("Ties: " + Game.getTies());
                 totallabel.setText("Total Games Played: " + Game.getTotalgames());
+                if(result == 3){
+                    playCheer();
+                }
             }
         );
         gamegrid.setConstraints(rockbutton, 11, 30);
@@ -187,6 +195,16 @@ public class Main extends Application {
         if(answer){
             Platform.exit();
         }
+    }
+
+    private void playCheer(){
+        String cheers[] = {"src/Sounds/Cheers/ayayay.wav","src/Sounds/Cheers/ole.mp3"};
+        Random random = new Random();
+        String path = new File(cheers[random.nextInt(cheers.length)]).getAbsolutePath();
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer player = new MediaPlayer(media);
+        player.play();
+        player.setVolume(0.013);
     }
 
 
