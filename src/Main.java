@@ -10,6 +10,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.media.*;
 import javafx.stage.*;
+import javafx.util.Duration;
+
 import java.nio.file.Paths;
 import java.io.File;
 import java.util.Random;
@@ -35,7 +37,7 @@ public class Main extends Application {
         Game game = new Game();
 
         Stage window = primaryStage; // primary stage
-        window.setTitle("RockPaperScissors Bot"); // Window title (top of screen)
+        window.setTitle("Rock Paper Scissors"); // Window title (top of screen)
 
         window.setOnCloseRequest(e -> {
             e.consume();
@@ -51,8 +53,9 @@ public class Main extends Application {
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer player = new MediaPlayer(media);
         player.setCycleCount(MediaPlayer.INDEFINITE);
+        player.setStartTime(Duration.seconds(8));
         player.play();
-        player.setVolume(0.013); // URL: [https://freesound.org/people/Lenguaverde/sounds/177304/]
+        player.setVolume(0.1); // URL: [https://freesound.org/people/Lenguaverde/sounds/177304/]
 
             //Button 1 (go to game)
         Button button1 = new Button("Click here to start"); // Create a button
@@ -114,6 +117,9 @@ public class Main extends Application {
                 if(result == 3){
                     playCheer();
                 }
+                else if(result == 4){
+                    playBoo();
+                }
             }
         );
         gamegrid.setConstraints(rockbutton, 11, 30);
@@ -127,6 +133,12 @@ public class Main extends Application {
                     losslabel.setText("Losses: " + Game.getLosses());
                     tielabel.setText("Ties: " + Game.getTies());
                     totallabel.setText("Total Games Played: " + Game.getTotalgames());
+                    if(result == 3){
+                        playCheer();
+                    }
+                    else if(result == 4){
+                        playBoo();
+                    }
                 }
         );
         gamegrid.setConstraints(paperbutton, 12, 30);
@@ -140,6 +152,12 @@ public class Main extends Application {
                     losslabel.setText("Losses: " + Game.getLosses());
                     tielabel.setText("Ties: " + Game.getTies());
                     totallabel.setText("Total Games Played: " + Game.getTotalgames());
+                    if(result == 3){
+                        playCheer();
+                    }
+                    else if(result == 4){
+                        playBoo();
+                    }
                 }
         );
         gamegrid.setConstraints(scissorbutton, 13, 30);
@@ -204,7 +222,17 @@ public class Main extends Application {
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer player = new MediaPlayer(media);
         player.play();
-        player.setVolume(0.013);
+        player.setVolume(0.5);
+    }
+
+    private void playBoo(){
+        String boos[] = {"src/Sounds/Boos/nonono.aif","src/Sounds/Boos/no.wav"};
+        Random random = new Random();
+        String path = new File(boos[random.nextInt(boos.length)]).getAbsolutePath();
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer player = new MediaPlayer(media);
+        player.play();
+        player.setVolume(0.5);
     }
 
 
