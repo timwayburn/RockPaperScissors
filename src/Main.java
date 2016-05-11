@@ -1,3 +1,4 @@
+import com.sun.xml.internal.bind.v2.TODO;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -24,9 +25,10 @@ import java.util.Random;
  */
 public class Main extends Application {
 
-    Scene scene1, scene2, scene3;
+    Scene scene1, scene2, scene3, scene4;
     Stage window;
     GridPane grid;
+    Game game;
 
     public static void main(String[] args) {
         launch(args);
@@ -34,7 +36,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Game game = new Game();
+
 
         Stage window = primaryStage; // primary stage
         window.setTitle("Rock Paper Scissors"); // Window title (top of screen)
@@ -55,13 +57,14 @@ public class Main extends Application {
         player.setCycleCount(MediaPlayer.INDEFINITE);
         player.setStartTime(Duration.seconds(8));
         player.play();
-        player.setVolume(0.1); // URL: [https://freesound.org/people/Lenguaverde/sounds/177304/]
+        player.setVolume(0.08);
 
             //Button 1 (go to game)
         Button button1 = new Button("Click here to start"); // Create a button
         button1.setOnAction(e -> {
+            game = new Game();
             window.setScene(scene2);
-            player.pause();
+            player.stop();
         });
 
 
@@ -73,9 +76,9 @@ public class Main extends Application {
 
         MediaView mediaView = new MediaView(player);
 
-        VBox layout = new VBox(20);
-        layout.getChildren().addAll(label1, button1, button3, mediaView);
-        scene1 = new Scene(layout, 1080, 960); // create the scene, set size of entire window
+        VBox layout1 = new VBox(20);
+        layout1.getChildren().addAll(label1, button1, button3, mediaView);
+        scene1 = new Scene(layout1, 1080, 960); // create the scene, set size of entire window
 
 
 
@@ -114,12 +117,7 @@ public class Main extends Application {
                 losslabel.setText("Losses: " + Game.getLosses());
                 tielabel.setText("Ties: " + Game.getTies());
                 totallabel.setText("Total Games Played: " + Game.getTotalgames());
-                if(result == 3){
-                    playCheer();
-                }
-                else if(result == 4){
-                    playBoo();
-                }
+                effectSelect(result);
             }
         );
         gamegrid.setConstraints(rockbutton, 11, 30);
@@ -128,17 +126,12 @@ public class Main extends Application {
         Button paperbutton = new Button("Paper");
 
         paperbutton.setOnAction(e -> {
-                    int result = game.play(2); // choice: 1 = rock, 2 = paper, 3 = scissors
+            int result = game.play(2); // choice: 1 = rock, 2 = paper, 3 = scissors
                     winslabel.setText("Wins: " + Game.getWins());
                     losslabel.setText("Losses: " + Game.getLosses());
                     tielabel.setText("Ties: " + Game.getTies());
                     totallabel.setText("Total Games Played: " + Game.getTotalgames());
-                    if(result == 3){
-                        playCheer();
-                    }
-                    else if(result == 4){
-                        playBoo();
-                    }
+                    effectSelect(result);
                 }
         );
         gamegrid.setConstraints(paperbutton, 12, 30);
@@ -152,12 +145,7 @@ public class Main extends Application {
                     losslabel.setText("Losses: " + Game.getLosses());
                     tielabel.setText("Ties: " + Game.getTies());
                     totallabel.setText("Total Games Played: " + Game.getTotalgames());
-                    if(result == 3){
-                        playCheer();
-                    }
-                    else if(result == 4){
-                        playBoo();
-                    }
+                    effectSelect(result);
                 }
         );
         gamegrid.setConstraints(scissorbutton, 13, 30);
@@ -168,7 +156,7 @@ public class Main extends Application {
 
 
 
-        // Layout 4 - To highscore submit
+        // Layout 3 - To highscore submit
 
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10,10,10,10));
@@ -183,22 +171,47 @@ public class Main extends Application {
         TextField nameInput = new TextField();
         GridPane.setConstraints(nameInput, 1, 1);
         nameInput.setPromptText("Your name here");
-        //TODO: red outline if no name or too long.
 
-            // Button 4 - submit highscore
-        Button button4 = new Button("Submit score");
-        GridPane.setConstraints(button4, 1, 2);
-        //TODO: highscorelist
+            // Submitbutton - submit highscore
+        Button submitbutton = new Button("Submit score");
+        submitbutton.setOnAction(e -> {
+            window.setScene(scene4);
+        });
+        GridPane.setConstraints(submitbutton, 1, 2);
 
             //title lable
-        Label label2 = new Label("Enter your name to enter the highscores");
+        Label label2 = new Label("Enter your name to enter the highscore list");
         GridPane.setConstraints(label2, 0, 0);
 
-        grid.getChildren().addAll(label2,nameLabel, nameInput, button4);
+        grid.getChildren().addAll(label2,nameLabel, nameInput, submitbutton);
         scene3 = new Scene(grid, 1080, 960);
 
-        //Layout 5 - Options menu
-            //TODO: Options menu with checkboxes for resolutions, modes, difficulty.
+
+
+
+        //Layout 4 - Highscore display
+
+        GridPane highscoregrid = new GridPane();
+        highscoregrid.setPadding(new Insets(10,10,10,10));
+        highscoregrid.setVgap(8);
+        highscoregrid.setHgap(10);
+
+            // menubutton - back to menu
+        Button menubutton = new Button("Back to main menu");
+        menubutton.setOnAction(e -> {
+            window.setScene(scene1);
+            player.play();
+        });
+        GridPane.setConstraints(menubutton, 1, 2);
+
+            //highscore title lable
+        Label highscoretitle = new Label("The top 3 players are:");
+        GridPane.setConstraints(highscoretitle, 1, 3);
+
+        highscoregrid.getChildren().addAll(menubutton, highscoretitle);
+        scene4 = new Scene(highscoregrid, 1080, 960);
+
+            // TODO: button to return to menu or restart.
 
 
         // startup
@@ -219,21 +232,39 @@ public class Main extends Application {
         String cheers[] = {"src/Sounds/Cheers/ayayay.wav","src/Sounds/Cheers/ole.mp3"};
         Random random = new Random();
         String path = new File(cheers[random.nextInt(cheers.length)]).getAbsolutePath();
-        Media media = new Media(new File(path).toURI().toString());
-        MediaPlayer player = new MediaPlayer(media);
-        player.play();
-        player.setVolume(0.5);
+        playSound(path);
     }
 
     private void playBoo(){
         String boos[] = {"src/Sounds/Boos/nonono.aif","src/Sounds/Boos/no.wav"};
         Random random = new Random();
         String path = new File(boos[random.nextInt(boos.length)]).getAbsolutePath();
+        playSound(path);
+    }
+
+    private void playDraw(){
+        String draws[] = {"src/Sounds/Draw/doitagain.wav"};
+        Random random = new Random();
+        String path = new File(draws[random.nextInt(draws.length)]).getAbsolutePath();
+        playSound(path);
+    }
+
+    private void playSound(String path){
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer player = new MediaPlayer(media);
         player.play();
         player.setVolume(0.5);
     }
-
+    private void effectSelect(int result){
+        if(result == 3){
+            playCheer();
+        }
+        else if(result == 4){
+            playBoo();
+        }
+        else {
+            playDraw();
+        }
+    }
 
 }

@@ -13,8 +13,5 @@ We will create JUnit tests for certain methods as well as conduct user tests as 
 
 
 Sounds from:
-cheers
-https://freesound.org/people/Robinhood76/sounds/61226/ - ayayay
-http://soundbible.com/698-Ole-Matador-2.html - ole
-menu music
-https://freesound.org/people/Lenguaverde/sounds/177304/ - hat dance
+https://freesound.org/
+http://soundbible.com/
