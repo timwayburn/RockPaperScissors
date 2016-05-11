@@ -21,10 +21,6 @@ import javax.swing.*;
  */
 public class Game {
 
-    static private int rockcount;
-    static private int scissorcount;
-    static private int papercount;
-
     static private int wins;
     static private int ties;
     static private int losses;
@@ -65,5 +61,15 @@ public class Game {
         totalgames++;
         return result;
     }
-    
+
+    public int finalScore(){
+        return wins - losses;
+    }
+
+    public void clearStats(){
+        wins = 0;
+        losses = 0;
+        ties = 0;
+        totalgames = 0;
+    }
 }

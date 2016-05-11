@@ -13,8 +13,8 @@ import javafx.scene.media.*;
 import javafx.stage.*;
 import javafx.util.Duration;
 
+import java.io.*;
 import java.nio.file.Paths;
-import java.io.File;
 import java.util.Random;
 
 
@@ -29,6 +29,13 @@ public class Main extends Application {
     Stage window;
     GridPane grid;
     Game game;
+    Label highscoretitle;
+    static int highScore;
+    static String highScoreName;
+    static String name;
+
+    private String saveDataPath;
+    private String fileName = "SaveData";
 
     public static void main(String[] args) {
         launch(args);
@@ -36,10 +43,20 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Highscore path
+        try{
+            saveDataPath = Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        loadHighScore();
 
 
         Stage window = primaryStage; // primary stage
         window.setTitle("Rock Paper Scissors"); // Window title (top of screen)
+        game = new Game();
 
         window.setOnCloseRequest(e -> {
             e.consume();
@@ -62,7 +79,7 @@ public class Main extends Application {
             //Button 1 (start game)
         Button button1 = new Button("Click here to start"); // Create a button
         button1.setOnAction(e -> {
-            game = new Game();
+            game.clearStats();
             window.setScene(scene2);
             player.stop();
         });
@@ -70,7 +87,9 @@ public class Main extends Application {
 
             // Button 3 (exit button)
         Button button3 = new Button("Exit");
-        button3.setOnAction(e -> closeProgram());
+        button3.setOnAction(e -> {
+            closeProgram();
+        });
 
         Label label1 = new Label("Welcome to Rock Paper Scissors!");
 
@@ -90,22 +109,29 @@ public class Main extends Application {
         gamegrid.setHgap(10);
 
         // Wins label
-        Label winslabel = new Label("Wins: " + Game.getWins());
+        Label winslabel = new Label("Wins: " + game.getWins());
         gamegrid.setConstraints(winslabel, 1, 2);
         // Tie label
-        Label tielabel = new Label("Ties: " + Game.getTies());
+        Label tielabel = new Label("Ties: " + game.getTies());
         gamegrid.setConstraints(tielabel, 2, 2);
         // Loss label
-        Label losslabel = new Label("Losses: " + Game.getLosses());
+        Label losslabel = new Label("Losses: " + game.getLosses());
         gamegrid.setConstraints(losslabel, 3, 2);
         // Totalgames label
-        Label totallabel = new Label("Total Games played: " + Game.getTotalgames());
+        Label totallabel = new Label("Total Games played: " + game.getTotalgames());
         gamegrid.setConstraints(totallabel, 0, 1);
 
 
-        // Button 2 (to highscore button)
+        // Button 2 (end game button)
         Button button2 = new Button("End Game");
-        button2.setOnAction(e -> window.setScene(scene3));
+        button2.setOnAction(e -> {
+            if(game.finalScore() > highScore) {
+                window.setScene(scene3);
+            }
+            else{
+                window.setScene(scene4);
+            }
+        });
         gamegrid.setConstraints(button2, 12, 31);
 
         // Rock button
@@ -175,6 +201,10 @@ public class Main extends Application {
             // Submitbutton - submit highscore
         Button submitbutton = new Button("Submit score");
         submitbutton.setOnAction(e -> {
+            name = nameInput.getText();
+            setHighScore(game);
+            loadHighScore();
+            highscoretitle.setText("The top score is held by " + highScoreName + " with a score of " + highScore + ". (Wins - Losses)");
             window.setScene(scene4);
         });
         GridPane.setConstraints(submitbutton, 1, 2);
@@ -199,20 +229,31 @@ public class Main extends Application {
             // menubutton - back to menu
         Button menubutton = new Button("Back to main menu");
         menubutton.setOnAction(e -> {
+            game.clearStats();
             window.setScene(scene1);
             player.play();
+            winslabel.setText("Wins: " + Game.getWins());
+            losslabel.setText("Losses: " + Game.getLosses());
+            tielabel.setText("Ties: " + Game.getTies());
+            totallabel.setText("Total Games Played: " + Game.getTotalgames());
         });
         GridPane.setConstraints(menubutton, 1, 1);
 
             // restartbutton - play again/ restart
         Button restartbutton = new Button("Restart");
         restartbutton.setOnAction(e -> {
+            game.clearStats();
             window.setScene(scene2);
+
+            winslabel.setText("Wins: " + Game.getWins());
+            losslabel.setText("Losses: " + Game.getLosses());
+            tielabel.setText("Ties: " + Game.getTies());
+            totallabel.setText("Total Games Played: " + Game.getTotalgames());
         });
         GridPane.setConstraints(restartbutton, 2, 1);
 
             //highscore title lable
-        Label highscoretitle = new Label("The top 3 players are:");
+        highscoretitle = new Label("The top score is held by " + highScoreName + " with a score of " + highScore + ". (Wins - Losses)");
         GridPane.setConstraints(highscoretitle, 1, 2);
 
         highscoregrid.getChildren().addAll(menubutton, highscoretitle, restartbutton);
@@ -225,6 +266,58 @@ public class Main extends Application {
         primaryStage.setScene(scene1); // set the main scene on stage
         primaryStage.setResizable(false);
         primaryStage.show();
+    }
+
+    private void loadHighScore() {
+        try{
+            File f = new File(saveDataPath, fileName);
+            if(!f.isFile()){
+                createSaveData();
+            }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+            String topscore = reader.readLine();
+            String[] topScoreParts = topscore.split("\\s");
+            highScore = Integer.parseInt(topScoreParts[1]);
+            highScoreName = topScoreParts[0];
+            reader.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void createSaveData(){
+        try{
+            File file = new File(saveDataPath, fileName);
+
+            FileWriter output = new FileWriter(file);
+            BufferedWriter writer = new BufferedWriter(output);
+            writer.write("NOONE " + 000);
+            writer.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void setHighScore(Game game){
+        FileWriter output;
+        try{
+            File f = new File(saveDataPath,fileName);
+            output = new FileWriter(f);
+            BufferedWriter writer = new BufferedWriter(output);
+            int thisscore = game.finalScore();
+
+            if(thisscore >= highScore){
+                writer.write(name + " " + thisscore);
+            }
+            else{
+                writer.write(highScoreName + " " + highScore);
+            }
+
+            writer.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void closeProgram() {
