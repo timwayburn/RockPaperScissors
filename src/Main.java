@@ -59,7 +59,7 @@ public class Main extends Application {
         player.play();
         player.setVolume(0.08);
 
-            //Button 1 (go to game)
+            //Button 1 (start game)
         Button button1 = new Button("Click here to start"); // Create a button
         button1.setOnAction(e -> {
             game = new Game();
@@ -202,16 +202,23 @@ public class Main extends Application {
             window.setScene(scene1);
             player.play();
         });
-        GridPane.setConstraints(menubutton, 1, 2);
+        GridPane.setConstraints(menubutton, 1, 1);
+
+            // restartbutton - play again/ restart
+        Button restartbutton = new Button("Restart");
+        restartbutton.setOnAction(e -> {
+            window.setScene(scene2);
+        });
+        GridPane.setConstraints(restartbutton, 2, 1);
 
             //highscore title lable
         Label highscoretitle = new Label("The top 3 players are:");
-        GridPane.setConstraints(highscoretitle, 1, 3);
+        GridPane.setConstraints(highscoretitle, 1, 2);
 
-        highscoregrid.getChildren().addAll(menubutton, highscoretitle);
+        highscoregrid.getChildren().addAll(menubutton, highscoretitle, restartbutton);
         scene4 = new Scene(highscoregrid, 1080, 960);
 
-            // TODO: button to return to menu or restart.
+
 
 
         // startup
