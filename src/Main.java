@@ -139,10 +139,7 @@ public class Main extends Application {
 
         rockbutton.setOnAction(e -> {
                 int result = game.play(1); // choice: 1 = rock, 2 = paper, 3 = scissors
-                winslabel.setText("Wins: " + Game.getWins());
-                losslabel.setText("Losses: " + Game.getLosses());
-                tielabel.setText("Ties: " + Game.getTies());
-                totallabel.setText("Total Games Played: " + Game.getTotalgames());
+                updateGameLabels(game, winslabel,losslabel,tielabel,totallabel);
                 effectSelect(result);
             }
         );
@@ -153,10 +150,7 @@ public class Main extends Application {
 
         paperbutton.setOnAction(e -> {
             int result = game.play(2); // choice: 1 = rock, 2 = paper, 3 = scissors
-                    winslabel.setText("Wins: " + Game.getWins());
-                    losslabel.setText("Losses: " + Game.getLosses());
-                    tielabel.setText("Ties: " + Game.getTies());
-                    totallabel.setText("Total Games Played: " + Game.getTotalgames());
+                    updateGameLabels(game, winslabel,losslabel,tielabel,totallabel);
                     effectSelect(result);
                 }
         );
@@ -167,10 +161,7 @@ public class Main extends Application {
 
         scissorbutton.setOnAction(e -> {
                     int result = game.play(3); // choice: 1 = rock, 2 = paper, 3 = scissors
-                    winslabel.setText("Wins: " + Game.getWins());
-                    losslabel.setText("Losses: " + Game.getLosses());
-                    tielabel.setText("Ties: " + Game.getTies());
-                    totallabel.setText("Total Games Played: " + Game.getTotalgames());
+                    updateGameLabels(game, winslabel,losslabel,tielabel,totallabel);
                     effectSelect(result);
                 }
         );
@@ -204,7 +195,7 @@ public class Main extends Application {
             name = nameInput.getText();
             setHighScore(game);
             loadHighScore();
-            highscoretitle.setText("The top score is held by " + highScoreName + " with a score of " + highScore + ". (Wins - Losses)");
+            updateHsLabel(highscoretitle);
             window.setScene(scene4);
         });
         GridPane.setConstraints(submitbutton, 1, 2);
@@ -318,6 +309,17 @@ public class Main extends Application {
         catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void updateHsLabel(Label label){
+        label.setText("The top score is held by " + highScoreName + " with a score of " + highScore + ". (Wins - Losses)");
+    }
+
+    private void updateGameLabels(Game game, Label winslabel,Label losslabel,Label tielabel,Label totallabel){
+        winslabel.setText("Wins: " + Game.getWins());
+        losslabel.setText("Losses: " + Game.getLosses());
+        tielabel.setText("Ties: " + Game.getTies());
+        totallabel.setText("Total Games Played: " + Game.getTotalgames());
     }
 
     private void closeProgram() {
