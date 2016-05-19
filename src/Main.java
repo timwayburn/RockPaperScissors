@@ -1,4 +1,3 @@
-import com.sun.xml.internal.bind.v2.TODO;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -10,11 +9,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.media.*;
-import javafx.stage.*;
 import javafx.util.Duration;
 
 import java.io.*;
-import java.nio.file.Paths;
 import java.util.Random;
 
 
@@ -129,6 +126,7 @@ public class Main extends Application {
                 window.setScene(scene3);
             }
             else{
+
                 window.setScene(scene4);
             }
         });
@@ -316,10 +314,10 @@ public class Main extends Application {
     }
 
     private void updateGameLabels(Game game, Label winslabel,Label losslabel,Label tielabel,Label totallabel){
-        winslabel.setText("Wins: " + Game.getWins());
-        losslabel.setText("Losses: " + Game.getLosses());
-        tielabel.setText("Ties: " + Game.getTies());
-        totallabel.setText("Total Games Played: " + Game.getTotalgames());
+        winslabel.setText("Wins: " + game.getWins());
+        losslabel.setText("Losses: " + game.getLosses());
+        tielabel.setText("Ties: " + game.getTies());
+        totallabel.setText("Total Games Played: " + game.getTotalgames());
     }
 
     private void closeProgram() {
