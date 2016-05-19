@@ -65,7 +65,7 @@ public class Main extends Application {
         // Layout 1 - Main menu
 
             //music for main menu
-        String path = new File("src/Sounds/menumusic.mp3").getAbsolutePath();
+        String path = new File("Sounds/menumusic.mp3").getAbsolutePath();
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer player = new MediaPlayer(media);
         player.setCycleCount(MediaPlayer.INDEFINITE);
