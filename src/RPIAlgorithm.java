@@ -2,7 +2,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Created by Tim on 23/04/16.
+ * Handles the computer's selection of Rock, Paper or Scissors.
+ *
+ * Created by Tim Wayburn & Philippa Örnell on 21/04/16.
  */
 public class RPIAlgorithm {
 
@@ -10,6 +12,13 @@ public class RPIAlgorithm {
     ArrayList<Integer> compplays = new ArrayList<>();
     Random random = new Random();
 
+    /**
+     * The method that is called within the play method in the Game class.
+     * Compares the computers choice with the players choice
+     *
+     * @param choice of player (1:rock 2:paper 3:scissors)
+     * @return result of the play (3:win 4:loss 5:tie)
+     */
     public int RPS(int choice){
         // parameter choice: 1 = rock, 2 = paper, 3 = scissors
         //  returns result: 3 = win, 4 = loss, 5 = tie
@@ -41,6 +50,9 @@ public class RPIAlgorithm {
         }
     }
 
+    /**
+     * @return the computers throw (1:rock 2:paper 3:scissors)
+     */
     public int computerselection(){
         int compchoice = random.nextInt(3) + 1;
         return compchoice;

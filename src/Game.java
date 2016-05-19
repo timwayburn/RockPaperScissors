@@ -1,9 +1,10 @@
 
 
 /**
- * The Game class. Stores statistics.
+ * The Game class. Stores statistics during gameplay.
+ * Also includes the play method.
  *
- * Created by Tim on 08/05/16.
+ * Created by Tim Wayburn & Philippa Örnell on 21/04/16.
  */
 public class Game {
 
@@ -14,23 +15,43 @@ public class Game {
 
     RPIAlgorithm rpi = new RPIAlgorithm();
 
+    /**
+     * @return the wins of the current game.
+     */
     public static int getWins(){
         return wins;
     }
 
+    /**
+     * @return the losses of the current game.
+     */
     public static int getLosses(){
         return losses;
     }
 
+    /**
+     * @return the ties of the current game.
+     */
     public static int getTies(){
         return ties;
     }
 
+    /**
+     * @return the total rounds played in the current game.
+     */
     public static int getTotalgames(){
         return totalgames;
     }
 
 
+    /**
+     * This method simulates a play of rock paper scissors.
+     * It takes in a chosen play and returns the outcome.
+     * Adds to the game's current counters based off result.
+     *
+     * @param  choice (1:rock 2:paper 3:scissors)
+     * @return result of the play (3:win 4:loss 5:tie)
+     */
     public int play(int choice){
         // choice: 1 = rock, 2 = paper, 3 = scissors
         // result: 3 = win, 4 = loss, 5 = tie
@@ -48,10 +69,16 @@ public class Game {
         return result;
     }
 
+    /**
+     * @return the total wins minus total losses in the current game.
+     */
     public int finalScore(){
         return wins - losses;
     }
 
+    /**
+     * Clears all the stats of the current game.
+     */
     public void clearStats(){
         wins = 0;
         losses = 0;

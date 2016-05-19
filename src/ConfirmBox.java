@@ -8,12 +8,19 @@ import javafx.stage.Stage;
 
 
 /**
- * Created by Tim on 27/04/16.
+ * The class for a Confirm Box, such as the one that appears when exiting the game.
+ *
+ * Created by Tim Wayburn & Philippa Örnell on 21/04/16.
  */
 public class ConfirmBox {
 
     static boolean answer;
 
+    /**
+     * @param title of Confirm Box
+     * @param message to be displayed in Confirm Box
+     * @return true if 'yes' selected, false otherwise.
+     */
     public static boolean display(String title, String message){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);

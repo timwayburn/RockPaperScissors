@@ -16,17 +16,16 @@ import java.util.Random;
 
 
 /**
- * Test Application :)
+ * The main class of our Rock Paper Scissors game. Run this Class to start the game.
  *
- * Created by Tim on 21/04/16.
+ * Created by Tim Wayburn & Philippa Örnell on 21/04/16.
  */
 public class Main extends Application {
 
     Scene scene1, scene2, scene3, scene4;
-    Stage window;
-    GridPane grid;
     Game game;
     Label highscoretitle;
+    MediaPlayer player;
     static int highScore;
     static String highScoreName;
     static String name;
@@ -38,6 +37,13 @@ public class Main extends Application {
         launch(args);
     }
 
+    /**
+     * Called upon start of program.
+     * (Could be condensed by breaking up into methods, or by remaking in Scene Builder)
+     *
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Highscore path
@@ -48,7 +54,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        loadHighScore();
+        loadHighScore(); // Load from highscore file upon game start.
 
 
         Stage window = primaryStage; // primary stage
@@ -65,12 +71,7 @@ public class Main extends Application {
         // Layout 1 - Main menu
 
             //music for main menu
-        Media media = new Media(this.getClass().getClassLoader().getResource("Sounds/menumusic.mp3").toExternalForm().toString());
-        MediaPlayer player = new MediaPlayer(media);
-        player.setCycleCount(MediaPlayer.INDEFINITE);
-        player.setStartTime(Duration.seconds(8));
-        player.play();
-        player.setVolume(0.08);
+        playMenuMusic();
 
             //Button 1 (start game)
         Button button1 = new Button("Click here to start"); // Create a button
@@ -98,7 +99,7 @@ public class Main extends Application {
 
 
 
-        // Layout 2 - Gameplay
+            // Layout 2 - Gameplay
 
         GridPane gamegrid = new GridPane();
         gamegrid.setPadding(new Insets(10,10,10,10));
@@ -171,7 +172,7 @@ public class Main extends Application {
 
 
 
-        // Layout 3 - To highscore submit
+            // Layout 3 - To highscore submit
 
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10,10,10,10));
@@ -257,6 +258,9 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Loads the highscore from a save file. If not existent, create a save file.
+     */
     private void loadHighScore() {
         try{
             File f = new File(saveDataPath, fileName);
@@ -274,6 +278,10 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Creates a save data file.
+     */
     private void createSaveData(){
         try{
             File file = new File(saveDataPath, fileName);
@@ -287,6 +295,12 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Sets a highscore in the save file.
+     *
+     * @param game instance
+     */
     private void setHighScore(Game game){
         FileWriter output;
         try{
@@ -313,6 +327,15 @@ public class Main extends Application {
         label.setText("The top score is held by " + highScoreName + " with a score of " + highScore + ". (Wins - Losses)");
     }
 
+    /**
+     * Updates the labels displayed during a game.
+     *
+     * @param game instance
+     * @param winslabel
+     * @param losslabel
+     * @param tielabel
+     * @param totallabel
+     */
     private void updateGameLabels(Game game, Label winslabel,Label losslabel,Label tielabel,Label totallabel){
         winslabel.setText("Wins: " + game.getWins());
         losslabel.setText("Losses: " + game.getLosses());
@@ -320,6 +343,9 @@ public class Main extends Application {
         totallabel.setText("Total Games Played: " + game.getTotalgames());
     }
 
+    /**
+     * Method to call upon closing the program.
+     */
     private void closeProgram() {
         Boolean answer = ConfirmBox.display("Warning!", "Are you sure you want to exit?");
 
@@ -328,30 +354,50 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Selects a random win sound to play.
+     */
     private void playCheer(){
         String cheers[] = {"Sounds/ayayay.wav","Sounds/ole.mp3"};
         Random random = new Random();
         playSound(cheers[random.nextInt(cheers.length)]);
     }
 
+    /**
+     * Selects a random loss sound to play.
+     */
     private void playBoo(){
         String boos[] = {"Sounds/nonono.aif","Sounds/no.wav"};
         Random random = new Random();
         playSound(boos[random.nextInt(boos.length)]);
     }
 
+    /**
+     * Selects a random draw sound to play.
+     */
     private void playDraw(){
         String draws[] = {"Sounds/doitagain.wav"};
         Random random = new Random();
         playSound(draws[random.nextInt(draws.length)]);
     }
 
+    /**
+     * Plays a sound with a given path.
+     *
+     * @param path of sound to be played
+     */
     private void playSound(String path){
         Media media = new Media(this.getClass().getClassLoader().getResource(path).toExternalForm().toString());
         MediaPlayer player = new MediaPlayer(media);
         player.play();
         player.setVolume(0.5);
     }
+
+    /**
+     * Calls on a win,lose,tie sound effect based on the result of a play.
+     *
+     * @param result (3:win 4:loss 5:tie)
+     */
     private void effectSelect(int result){
         if(result == 3){
             playCheer();
@@ -362,6 +408,18 @@ public class Main extends Application {
         else {
             playDraw();
         }
+    }
+
+    /**
+     * Plays the menu music.
+     */
+    private void playMenuMusic(){
+        Media media = new Media(this.getClass().getClassLoader().getResource("Sounds/menumusic.mp3").toExternalForm().toString());
+        MediaPlayer player = new MediaPlayer(media);
+        player.setCycleCount(MediaPlayer.INDEFINITE);
+        player.setStartTime(Duration.seconds(8));
+        player.play();
+        player.setVolume(0.08);
     }
 
 }
