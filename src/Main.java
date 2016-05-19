@@ -329,21 +329,21 @@ public class Main extends Application {
     }
 
     private void playCheer(){
-        String cheers[] = {"src/Sounds/Cheers/ayayay.wav","src/Sounds/Cheers/ole.mp3"};
+        String cheers[] = {"Sounds/Cheers/ayayay.wav","Sounds/Cheers/ole.mp3"};
         Random random = new Random();
         String path = new File(cheers[random.nextInt(cheers.length)]).getAbsolutePath();
         playSound(path);
     }
 
     private void playBoo(){
-        String boos[] = {"src/Sounds/Boos/nonono.aif","src/Sounds/Boos/no.wav"};
+        String boos[] = {"Sounds/Boos/nonono.aif","Sounds/Boos/no.wav"};
         Random random = new Random();
         String path = new File(boos[random.nextInt(boos.length)]).getAbsolutePath();
         playSound(path);
     }
 
     private void playDraw(){
-        String draws[] = {"src/Sounds/Draw/doitagain.wav"};
+        String draws[] = {"Sounds/Draw/doitagain.wav"};
         Random random = new Random();
         String path = new File(draws[random.nextInt(draws.length)]).getAbsolutePath();
         playSound(path);
