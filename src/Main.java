@@ -65,7 +65,7 @@ public class Main extends Application {
         // Layout 1 - Main menu
 
             //music for main menu
-        String path = new File("Sounds/menumusic.mp3").getAbsolutePath();
+        String path = new File("Resources/Sounds/menumusic.mp3").getAbsolutePath();
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer player = new MediaPlayer(media);
         player.setCycleCount(MediaPlayer.INDEFINITE);
@@ -94,6 +94,7 @@ public class Main extends Application {
 
         VBox layout1 = new VBox(20);
         layout1.getChildren().addAll(label1, button1, button3, mediaView);
+        layout1.setStyle("-fx-background-image: url('http://duke.kenai.com/wave/Wave.jpg')");
         scene1 = new Scene(layout1, 1080, 960); // create the scene, set size of entire window
 
 
@@ -329,21 +330,21 @@ public class Main extends Application {
     }
 
     private void playCheer(){
-        String cheers[] = {"Sounds/Cheers/ayayay.wav","Sounds/Cheers/ole.mp3"};
+        String cheers[] = {"Resources/Sounds/Cheers/ayayay.wav","Sounds/Cheers/ole.mp3"};
         Random random = new Random();
         String path = new File(cheers[random.nextInt(cheers.length)]).getAbsolutePath();
         playSound(path);
     }
 
     private void playBoo(){
-        String boos[] = {"Sounds/Boos/nonono.aif","Sounds/Boos/no.wav"};
+        String boos[] = {"Resources/Sounds/Boos/nonono.aif","Sounds/Boos/no.wav"};
         Random random = new Random();
         String path = new File(boos[random.nextInt(boos.length)]).getAbsolutePath();
         playSound(path);
     }
 
     private void playDraw(){
-        String draws[] = {"Sounds/Draw/doitagain.wav"};
+        String draws[] = {"Resources/Sounds/Draw/doitagain.wav"};
         Random random = new Random();
         String path = new File(draws[random.nextInt(draws.length)]).getAbsolutePath();
         playSound(path);
