@@ -343,7 +343,6 @@ public class Main extends Application {
     private void playDraw(){
         String draws[] = {"Sounds/doitagain.wav"};
         Random random = new Random();
-        String path = new File(draws[random.nextInt(draws.length)]).getAbsolutePath();
         playSound(draws[random.nextInt(draws.length)]);
     }
 
