@@ -71,7 +71,12 @@ public class Main extends Application {
         // Layout 1 - Main menu
 
             //music for main menu
-        playMenuMusic();
+        Media media = new Media(this.getClass().getClassLoader().getResource("Sounds/menumusic.mp3").toExternalForm().toString());
+        player = new MediaPlayer(media);
+        player.setCycleCount(MediaPlayer.INDEFINITE);
+        player.setStartTime(Duration.seconds(8));
+        player.play();
+        player.setVolume(0.1);
 
             //Button 1 (start game)
         Button button1 = new Button("Click here to start"); // Create a button
@@ -410,16 +415,5 @@ public class Main extends Application {
         }
     }
 
-    /**
-     * Plays the menu music.
-     */
-    private void playMenuMusic(){
-        Media media = new Media(this.getClass().getClassLoader().getResource("Sounds/menumusic.mp3").toExternalForm().toString());
-        MediaPlayer player = new MediaPlayer(media);
-        player.setCycleCount(MediaPlayer.INDEFINITE);
-        player.setStartTime(Duration.seconds(8));
-        player.play();
-        player.setVolume(0.08);
-    }
 
 }
