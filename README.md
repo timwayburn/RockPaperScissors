@@ -7,6 +7,7 @@ To run the game:
 
 1. Download the repository.
 2. Compile and run the Main.java file in IDE. (Import project)
+    Note: Don't forget to mark the "Resources" folder as a resource folder.
 3. Have fun!
 
 We will create JUnit tests for certain methods as well as conduct user tests as soon as we have a working game.
