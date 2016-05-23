@@ -1,3 +1,4 @@
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -70,7 +71,7 @@ public class Main extends Application {
 
         // Layout 1 - Main menu
 
-            //music for main menu
+        //music for main menu
         Media media = new Media(this.getClass().getClassLoader().getResource("Sounds/menumusic.mp3").toExternalForm().toString());
         player = new MediaPlayer(media);
         player.setCycleCount(MediaPlayer.INDEFINITE);
@@ -78,7 +79,7 @@ public class Main extends Application {
         player.play();
         player.setVolume(0.1);
 
-            //Button 1 (start game)
+        //Button 1 (start game)
         Button button1 = new Button("Click here to start"); // Create a button
         button1.setOnAction(e -> {
             game.clearStats();
@@ -87,7 +88,7 @@ public class Main extends Application {
         });
 
 
-            // Button 3 (exit button)
+        // Button 3 (exit button)
         Button button3 = new Button("Exit");
         button3.setOnAction(e -> {
             closeProgram();
@@ -104,7 +105,7 @@ public class Main extends Application {
 
 
 
-            // Layout 2 - Gameplay
+        // Layout 2 - Gameplay
 
         GridPane gamegrid = new GridPane();
         gamegrid.setPadding(new Insets(10,10,10,10));
@@ -142,18 +143,18 @@ public class Main extends Application {
         Button rockbutton = new Button("Rock");
 
         rockbutton.setOnAction(e -> {
-                int result = game.play(1); // choice: 1 = rock, 2 = paper, 3 = scissors
-                updateGameLabels(game, winslabel,losslabel,tielabel,totallabel);
-                effectSelect(result);
-            }
+                    int result = game.play(1); // choice: 1 = rock, 2 = paper, 3 = scissors
+                    updateGameLabels(game, winslabel,losslabel,tielabel,totallabel);
+                    effectSelect(result);
+                }
         );
-        gamegrid.setConstraints(rockbutton, 11, 30);
+        gamegrid.setConstraints(rockbutton, 9, 30);
 
         // Paper button
         Button paperbutton = new Button("Paper");
 
         paperbutton.setOnAction(e -> {
-            int result = game.play(2); // choice: 1 = rock, 2 = paper, 3 = scissors
+                    int result = game.play(2); // choice: 1 = rock, 2 = paper, 3 = scissors
                     updateGameLabels(game, winslabel,losslabel,tielabel,totallabel);
                     effectSelect(result);
                 }
@@ -177,23 +178,23 @@ public class Main extends Application {
 
 
 
-            // Layout 3 - To highscore submit
+        // Layout 3 - To highscore submit
 
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10,10,10,10));
         grid.setVgap(8);
         grid.setHgap(10);
 
-            // Name Label
+        // Name Label
         Label nameLabel = new Label("Username:");
         GridPane.setConstraints(nameLabel, 0, 1);
 
-            // Name input
+        // Name input
         TextField nameInput = new TextField();
         GridPane.setConstraints(nameInput, 1, 1);
         nameInput.setPromptText("Your name here");
 
-            // Submitbutton - submit highscore
+        // Submitbutton - submit highscore
         Button submitbutton = new Button("Submit score");
         submitbutton.setOnAction(e -> {
             name = nameInput.getText();
@@ -204,7 +205,7 @@ public class Main extends Application {
         });
         GridPane.setConstraints(submitbutton, 1, 2);
 
-            //title lable
+        //title lable
         Label label2 = new Label("Enter your name to enter the highscore list");
         GridPane.setConstraints(label2, 0, 0);
 
@@ -221,7 +222,7 @@ public class Main extends Application {
         highscoregrid.setVgap(8);
         highscoregrid.setHgap(10);
 
-            // menubutton - back to menu
+        // menubutton - back to menu
         Button menubutton = new Button("Back to main menu");
         menubutton.setOnAction(e -> {
             game.clearStats();
@@ -234,7 +235,7 @@ public class Main extends Application {
         });
         GridPane.setConstraints(menubutton, 1, 1);
 
-            // restartbutton - play again/ restart
+        // restartbutton - play again/ restart
         Button restartbutton = new Button("Restart");
         restartbutton.setOnAction(e -> {
             game.clearStats();
@@ -247,7 +248,7 @@ public class Main extends Application {
         });
         GridPane.setConstraints(restartbutton, 2, 1);
 
-            //highscore title lable
+        //highscore title lable
         highscoretitle = new Label("The top score is held by " + highScoreName + " with a score of " + highScore + ". (Wins - Losses)");
         GridPane.setConstraints(highscoretitle, 1, 2);
 
