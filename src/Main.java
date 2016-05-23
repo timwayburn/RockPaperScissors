@@ -2,11 +2,13 @@
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.media.*;
@@ -95,13 +97,29 @@ public class Main extends Application {
         });
 
         Label label1 = new Label("Welcome to Rock Paper Scissors!");
+        Label labelmain1 = new Label("¡VIVA");
+        Label labelmain2 = new Label("MEXICO!");
 
         MediaView mediaView = new MediaView(player);
 
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(label1, button1, button3, mediaView);
-        layout1.setStyle("-fx-background: #00AA00;");
-        scene1 = new Scene(layout1, 1080, 960); // create the scene, set size of entire window
+        HBox layout1full = new HBox(100);
+        layout1full.setAlignment(Pos.CENTER);
+
+        VBox layout1 = new VBox(0);
+        VBox layout2 = new VBox(10);
+        VBox layout3 = new VBox(0);
+
+        layout1.setAlignment(Pos.CENTER);
+        layout2.setAlignment(Pos.CENTER);
+        layout3.setAlignment(Pos.CENTER);
+
+        layout1.getChildren().add(labelmain1);
+        layout2.getChildren().addAll(label1, button1, button3, mediaView);
+        layout3.getChildren().add(labelmain2);
+
+        layout1full.getChildren().addAll(layout1,layout2,layout3);
+        layout1full.setStyle("-fx-background: #00AA00;");
+        scene1 = new Scene(layout1full, 1080, 960); // create the scene, set size of entire window
 
 
 
