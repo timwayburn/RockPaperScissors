@@ -6,7 +6,7 @@ import javafx.geometry.*;
 
 
 /**
- *  The class for a Alert Box, like the one that appears when the game has been played 10 times.
+ *  The class for a Alert Box, like the one that appears when the player has won 10 times.
  * Created by Philippa on 2016-05-23.
  */
 public class AlertBox {
@@ -16,8 +16,8 @@ public class AlertBox {
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
-        window.setWidth(500);
-        window.setHeight(500);
+        window.setWidth(250);
+        window.setHeight(250);
 
 
         Label label = new Label();
@@ -28,6 +28,7 @@ public class AlertBox {
         VBox layout = new VBox(20);
         layout.getChildren().addAll(label, closeButton);
         layout.setAlignment(Pos.CENTER);
+        layout.setStyle("-fx-background: #AA0000;");
 
         Scene scene = new Scene(layout);
         window.setScene(scene);

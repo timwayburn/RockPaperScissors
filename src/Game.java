@@ -66,25 +66,25 @@ public class Game {
             ties++;
         }
         totalgames++;
-        checkachivements();
+        checkAchievements();
         return result;
     }
 
-    public void checkachivements(){
+    public void checkAchievements(){
 
         if(wins==1 && lastwin!=1){
-            AlertBox.display("¡Muy bien!", "You won your first game");
+            AlertBox.display("Achievement!", "Felicitaciones! You won your first game");
             lastwin = wins;
         }
 
         if(wins==5 && lastwin!=5){
-            AlertBox.display("¡Muy bien!", "You won 5 games");
+            AlertBox.display("Achievement!", "Jajaja, you won 5 games");
             lastwin = wins;
         }
 
 
         if(wins==10 && lastwin!=10){
-            AlertBox.display("¡Muy bien!", "You won 10 games");
+            AlertBox.display("Achievement!", "¡Hurra! You won 10 games");
             lastwin = wins;
         }
     }
