@@ -14,6 +14,7 @@ public class AlertBox {
     /**
      * @param title of Alert Box
      * @param message to be displayed in Alert Box
+     *
      */
     public static void display(String title, String message){
         Stage window = new Stage();
