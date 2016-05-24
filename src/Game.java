@@ -70,6 +70,10 @@ public class Game {
         return result;
     }
 
+
+    /**
+     * This method checks how many wins the player has and displays an alertbox telling them they have made an achievement.
+     */
     public void checkAchievements(){
 
         if(wins==1 && lastwin!=1){
