@@ -6,11 +6,15 @@ import javafx.geometry.*;
 
 
 /**
- *  The class for a Alert Box, like the one that appears when the player has won 10 times.
+ *  The class for an Alert Box, like the one that appears when the player has won 10 times.
  *  Created by Tim Wayburn & Philippa Örnell on 21/05/16.
  */
 public class AlertBox {
 
+    /**
+     * @param title of Alert Box
+     * @param message to be displayed in Alert Box
+     */
     public static void display(String title, String message){
         Stage window = new Stage();
 
