@@ -1,7 +1,7 @@
 # Projinda-16
 Projekt till Projindan 16 - Tim Wayburn/ Philippa Örnell
 
-Our first attempt ever to create a simple JavaFX program. (Warning for sloppiness)
+Our first attempt ever to create a simple JavaFX program. (Warning for sloppiness).
 It is a button based Rock Paper Scissors game. Works best with sounds!
 
 To run the game:
