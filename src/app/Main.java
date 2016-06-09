@@ -33,9 +33,7 @@ public class Main extends Application {
     static int highScore;
     static String highScoreName;
     static String name;
-
-    private String saveDataPath;
-    private String fileName = "SaveData";
+    HighScoreManager highScoreManager;
 
     public static void main(String[] args) {
         launch(args);
@@ -52,13 +50,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Highscore path
         try{
-            saveDataPath = Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            String saveDataPath = Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            highScoreManager = new HighScoreManager(saveDataPath);
         }
         catch(Exception e){
             e.printStackTrace();
         }
 
-        loadHighScore(); // Load from highscore file upon game start.
+        loadHighScore();// Load from highscore file upon game start.
 
 
         Stage window = primaryStage; // primary stage
@@ -217,7 +216,7 @@ public class Main extends Application {
         Button submitbutton = new Button("Submit score");
         submitbutton.setOnAction(e -> {
             name = nameInput.getText();
-            setHighScore(game);
+            highScoreManager.setNewHighScore(name, game.finalScore());
             loadHighScore();
             updateHsLabel(highscoretitle);
             window.setScene(scene4);
@@ -287,65 +286,8 @@ public class Main extends Application {
      * Loads the highscore from a save file. If not existent, create a save file.
      */
     private void loadHighScore() {
-        try{
-            File f = new File(saveDataPath, fileName);
-            if(!f.isFile()){
-                createSaveData();
-            }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
-            String topscore = reader.readLine();
-            String[] topScoreParts = topscore.split("\\s");
-            highScore = Integer.parseInt(topScoreParts[1]);
-            highScoreName = topScoreParts[0];
-            reader.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Creates a save data file.
-     */
-    private void createSaveData(){
-        try{
-            File file = new File(saveDataPath, fileName);
-
-            FileWriter output = new FileWriter(file);
-            BufferedWriter writer = new BufferedWriter(output);
-            writer.write("NOONE " + 000);
-            writer.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Sets a highscore in the save file.
-     *
-     * @param game instance
-     */
-    private void setHighScore(Game game){
-        FileWriter output;
-        try{
-            File f = new File(saveDataPath,fileName);
-            output = new FileWriter(f);
-            BufferedWriter writer = new BufferedWriter(output);
-            int thisscore = game.finalScore();
-
-            if(thisscore >= highScore){
-                writer.write(name + " " + thisscore);
-            }
-            else{
-                writer.write(highScoreName + " " + highScore);
-            }
-
-            writer.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+        highScore = highScoreManager.getHighScore();
+        highScoreName = highScoreManager.getHighScoreName();
     }
 
     private void updateHsLabel(Label label){
