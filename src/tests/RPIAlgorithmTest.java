@@ -49,4 +49,9 @@ public class RPIAlgorithmTest {
         Assert.assertEquals(4, rpiAlgorithm.RPS(2)); //PAPER < SCISSORS
         Assert.assertEquals(5, rpiAlgorithm.RPS(3)); //SCISSORS == SCISSORS
     }
+
+    @Test
+    public void crashTest() {
+
+    }
 }
