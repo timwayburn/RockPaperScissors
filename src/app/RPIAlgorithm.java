@@ -19,37 +19,44 @@ public class RPIAlgorithm {
      * Compares the computers choice with the players choice
      *
      * @param choice of player (1:rock 2:paper 3:scissors)
-     * @return result of the play (3:win 4:loss 5:tie)
+     * @return result of the play (1,2,3:win 4,5,6:loss 7,8,9:tie -1:wrong input)
      */
     public int RPS(int choice){
-        // parameter choice: 1 = rock, 2 = paper, 3 = scissors
-        //  returns result: 3 = win, 4 = loss, 5 = tie
         int compchoice = computerselection();
 
         plays.add(choice);
         compplays.add(compchoice);
 
         if(choice == compchoice){
-            return 5; // tie
+            if(choice == 1) {
+                return 7;   //Rock tie
+            }
+            else if(choice == 2) {
+                return 8;   //Paper tie
+            }
+            else if(choice == 3) {
+                return 9;   //Scissors tie
+            }
         }
         else if(choice == 1 && compchoice == 2){
-            return 4;
+            return 4;   //Rock < Paper
         }
         else if(choice == 1 && compchoice == 3){
-            return 3;
+            return 1;   //Rock > Scissors
         }
         else if(choice == 2 && compchoice == 1){
-            return 3;
+            return 2;   //Paper > Rock
         }
         else if(choice == 2 && compchoice == 3){
-            return 4;
+            return 5;   //Paper < Scissors
         }
-        else if(choice == 3 && compchoice ==1){
-            return 4;
+        else if(choice == 3 && compchoice == 1){
+            return 6;   //Scissors < Rock
         }
-        else {  //choice == 3 && compchoice == 2
-            return 3;
+        else if(choice == 3 && compchoice == 2){
+            return 3;   //Scissors > Paper
         }
+        return -1;
     }
 
     /**

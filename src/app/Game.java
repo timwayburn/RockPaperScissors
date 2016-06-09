@@ -58,13 +58,13 @@ public class Game {
         // choice: 1 = rock, 2 = paper, 3 = scissors
         // result: 3 = win, 4 = loss, 5 = tie
         int result = rpi.RPS(choice);
-        if(result == 3){
+        if(result == 1 || result == 2 || result == 3){
             wins++;
         }
-        else if (result == 4){
+        else if (result == 4 || result == 5 || result == 6){
             losses++;
         }
-        else{
+        else {
             ties++;
         }
         totalgames++;

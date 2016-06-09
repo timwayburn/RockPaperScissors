@@ -17,9 +17,9 @@ public class RPIAlgorithmTest {
             }
         };
 
-        Assert.assertEquals(3, rpiAlgorithm.RPS(2)); //PAPER > ROCK
-        Assert.assertEquals(4, rpiAlgorithm.RPS(3)); //SCISSORS < ROCK
-        Assert.assertEquals(5, rpiAlgorithm.RPS(1)); //ROCK == ROCK
+        Assert.assertEquals(2, rpiAlgorithm.RPS(2)); //PAPER > ROCK
+        Assert.assertEquals(6, rpiAlgorithm.RPS(3)); //SCISSORS < ROCK
+        Assert.assertEquals(7, rpiAlgorithm.RPS(1)); //ROCK == ROCK
     }
 
     @Test
@@ -33,7 +33,7 @@ public class RPIAlgorithmTest {
 
         Assert.assertEquals(3, rpiAlgorithm.RPS(3)); //SCISSORS > PAPER
         Assert.assertEquals(4, rpiAlgorithm.RPS(1)); //ROCK < PAPER
-        Assert.assertEquals(5, rpiAlgorithm.RPS(2)); //PAPER == PAPER
+        Assert.assertEquals(8, rpiAlgorithm.RPS(2)); //PAPER == PAPER
     }
 
     @Test
@@ -45,9 +45,9 @@ public class RPIAlgorithmTest {
             }
         };
 
-        Assert.assertEquals(3, rpiAlgorithm.RPS(1)); //ROCK > SCISSORS
-        Assert.assertEquals(4, rpiAlgorithm.RPS(2)); //PAPER < SCISSORS
-        Assert.assertEquals(5, rpiAlgorithm.RPS(3)); //SCISSORS == SCISSORS
+        Assert.assertEquals(1, rpiAlgorithm.RPS(1)); //ROCK > SCISSORS
+        Assert.assertEquals(5, rpiAlgorithm.RPS(2)); //PAPER < SCISSORS
+        Assert.assertEquals(9, rpiAlgorithm.RPS(3)); //SCISSORS == SCISSORS
     }
 
     @Test

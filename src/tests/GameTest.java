@@ -22,15 +22,15 @@ public class GameTest {
         Game game = new Game() {
             @Override
             public void checkAchievements() {
-
+                //GUI Stuff
             }
         };
         game.setRpi(rpiAlgorithm);
 
-        Assert.assertEquals(3, game.play(2));   //WIN
-        Assert.assertEquals(4, game.play(3));   //LOOSE
-        Assert.assertEquals(3, game.play(2));   //WIN
-        Assert.assertEquals(5, game.play(1));   //DRAW
+        Assert.assertEquals(2, game.play(2));   //WIN
+        Assert.assertEquals(6, game.play(3));   //LOOSE
+        Assert.assertEquals(2, game.play(2));   //WIN
+        Assert.assertEquals(7, game.play(1));   //DRAW
 
         Assert.assertEquals(2, Game.getWins());
         Assert.assertEquals(1, Game.getLosses());
